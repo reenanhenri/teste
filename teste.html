@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #db9dbf;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            color: #333;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Fundo com corações */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/heart-pattern.png');
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        /* Estilo da área de entrada */
+        .container {
+            background: rgba(143, 199, 191, 0.801);
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin-bottom: 20px;
+            position: relative;
+
+            img {
+            width: 100%;  /* Faz a imagem ocupar 100% da largura do container */
+            border-radius: 10px;  /* Dá bordas arredondadas à imagem */
+            margin-bottom: 20px;  /* Espaçamento abaixo da imagem */
+        }
+
+
+        }
+
+        /* Estilos dos botões */
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        #entrar {
+            background-color: #ee54a8;
+            color: white;
+        }
+
+        #naotoafim {
+            background-color: #151608;
+            color: white;
+        }
+
+        /* Estilo do botão SIM com animação de crescimento */
+        #sim {
+            background-color: #FF69B4;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            position: relative;
+            animation: crescer 2s infinite;
+        }
+
+        @keyframes crescer {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1.2); }
+        }
+
+        /* Estilo do botão NÃO */
+        #nao {
+            background-color: #f44336;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+        }
+
+        /* Estilo da mensagem final com destaque e margem */
+        #mensagem-final {
+            margin-top: 30px;
+            font-size: 22px;
+            color: #cf351a;
+            font-weight: bold;
+            display: none;
+            position: relative;
+        }
+
+        /* Animação da chuva de corações grandes */
+        .heart {
+            position: fixed;
+            top: -50px;
+            color: #FF69B4;
+            font-size: 36px; /* Tamanho maior para a última página */
+            animation: fall linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Seta rosa para o botão Entrar */
+        .seta {
+            display: none; /* Inicialmente escondida */
+            font-size: 100px;
+            color: #000000;
+            position: absolute;
+            top: 550px; /* Posiciona a seta acima do botão "Entrar" */
+            left: 45%;
+            transform: translateX(-50%);
+
+            .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="container" id="inicio">
+    <h1>oi, saudades!</h1>
+    <img src="kali.jpeg" alt="kali" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+    <h4>Você deseja entrar?</h4>
+    <button id="entrar">Bora lá </button>
+    <button id="naotoafim">Não </button>
+</div>
+
+<div id="pergunta" style="display: none;">
+    <h2>Você me aceita de volta na sua vida?</h2>
+    <button id="sim">SIM</button>
+    <button id="nao">NÃO</button>
+</div>
+
+<p id="mensagem-final">Parabéns, você fez a melhor escolha sua linda! </p>
+
+<script>
+    // Seleção dos elementos
+    const entrarBtn = document.getElementById("entrar");
+    const naotoafimBtn = document.getElementById("naotoafim");
+    const inicioDiv = document.getElementById("inicio");
+    const perguntaDiv = document.getElementById("pergunta");
+    const naoBtn = document.getElementById("nao");
+    const mensagemFinal = document.getElementById("mensagem-final");
+
+    // Criação da seta rosa (inicialmente oculta)
+    const seta = document.createElement("div");
+    seta.classList.add("seta");
+    seta.innerText = "⬇"; // Seta apontando para o botão "Entrar"
+    document.body.appendChild(seta); // Adiciona a seta ao corpo da página
+
+    // Ação ao clicar em "Entrar"
+    entrarBtn.onclick = () => {
+        inicioDiv.style.display = "none";
+        perguntaDiv.style.display = "block";
+    };
+    
+    // Ação ao clicar em "NÃO TO AFIM"
+    naotoafimBtn.onclick = () => {
+    alert("Erro: Não é possível clicar nesta resposta! Escolha outra.");
+    seta.style.display = "block"; // Exibe a seta após o clique
+    crescerBotaoSim(); // Inicia o crescimento gradual do botão SIM
+};
+
+// Ação ao clicar em "Entrar" para mostrar a segunda página e esconder a seta
+    entrarBtn.onclick = () => {
+    inicioDiv.style.display = "none";  // Esconde a primeira página
+    perguntaDiv.style.display = "block";  // Exibe a segunda página
+    seta.style.display = "none";  // Esconde a seta
+};
+
+    // Função para fazer o botão "NÃO" fugir para uma distância maior e mudar de cor
+    naoBtn.onmouseover = () => {
+        const x = Math.floor(Math.random() * 500) - 250; // Aumenta a distância aleatória no eixo X
+        const y = Math.floor(Math.random() * 500) - 250; // Aumenta a distância aleatória no eixo Y
+        naoBtn.style.transform = `translate(${x}px, ${y}px)`;
+        naoBtn.style.backgroundColor = getRandomColor(); // Muda a cor para uma aleatória
+    };
+
+    // Função para gerar uma cor aleatória
+    function getRandomColor() {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Função para aumentar gradualmente o tamanho do botão SIM
+    function crescerBotaoSim() {
+        let tamanhoAtual = 1;
+        const simBtn = document.getElementById("sim");
+        const intervalo = setInterval(() => {
+            tamanhoAtual += 0.02; // Aumenta o tamanho gradualmente
+            simBtn.style.transform = `scale(${tamanhoAtual})`;
+        }, 200);
+        // Remove a seta e interrompe o crescimento ao clicar no SIM
+        simBtn.onclick = () => {
+            clearInterval(intervalo);
+            seta.style.display = "none"; // Esconde a seta ao clicar em SIM
+            alert("Eu sabia que você aceitaria rs!!!!!!!");
+            perguntaDiv.style.display = "none";
+            mensagemFinal.style.display = "block";
+            startHeartRain(); // Inicia a chuva de corações grandes
+        };
+    }
+
+    // Função para iniciar a chuva de corações grandes
+    function startHeartRain() {
+        setInterval(createHeart, 200); // Cria um coração a cada 200ms
+    }
+
+    // Função para criar um coração e adicionar a animação de queda
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerText = "❤️";
+        heart.style.left = Math.random() * 100 + "vw"; // Posição aleatória na horizontal
+        heart.style.animationDuration = Math.random() * 2 + 3 + "s"; // Duração aleatória
+        document.body.appendChild(heart);
+
+        // Remove o coração após a animação
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }
+</script>
+
+</body>
+</html>
